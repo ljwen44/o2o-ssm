@@ -38,6 +38,9 @@ public interface UserService {
 	public int updAuth(String uid);
 	public List<UserDto> getUserByConditions(Integer page, String userName, String type);
 	public int getTotalByType(String type);
-	
-	
+	public int delUserCoin(String uid, Integer coin);
+	public int addUserCoin(String uid, Integer coin);
+	// …Í«Î»œ÷§
+	int updAuthStatus(String uid);
+	String getAuthStatus(String uid);
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sgxy.o2o.basic.controller.BasicController;
 import com.sgxy.o2o.dto.ProgressDto;
+import com.sgxy.o2o.service.OrderService;
 import com.sgxy.o2o.service.ProgressService;
 
 import net.sf.json.JSONObject;
@@ -25,6 +26,9 @@ public class ProgressController extends BasicController{
 	@Autowired
 	@Qualifier("progressService")
 	public ProgressService progressService;
+	@Autowired
+	@Qualifier("orderService")
+	public OrderService orderService;
 	
 	@ModelAttribute
 	@RequestMapping(value="/addProgress", method = RequestMethod.POST)
@@ -32,7 +36,12 @@ public class ProgressController extends BasicController{
 			String oid, String content) {
 		JSONObject json = new JSONObject();
 		json.put("message", "");
-		
+		String flag = orderService.getOFlag(oid);
+		if(flag.equals("已完成")) {
+			json.put("message", "该订单已完成，无法添加进度");
+			this.writeJson(json.toString(), response);
+			return;
+		}
 		String ppid = this.getUUID();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String pptime = df.format(new Date());

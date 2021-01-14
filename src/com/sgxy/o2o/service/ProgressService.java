@@ -10,4 +10,10 @@ public interface ProgressService {
 	
 	// 添加进度
 	public int addProgress(String oid, String ppid, String content, String pptime);
+
+	// 删除进度
+	public void delProgress(String oid);
+
 }
+
+

@@ -1,5 +1,7 @@
 package com.sgxy.o2o.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +24,40 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public int addUser(String uid, String email, String password, String type, String phone, String userName, String regTime, String auth) {
-		return userMapper.addUser(uid, email, password, type, phone, userName, regTime, auth);
+	public int addUser(String uid, String email, String password, 
+			String type, String phone, String userName, 
+			String regTime, Integer coin, String auth) {
+		return userMapper.addUser(uid, email, password, type, phone, userName, regTime, coin, auth);
 	}
 
 	@Override
 	public String getUserByPhone(String phone) {
 		return userMapper.getUserByPhone(phone);
 	}
+
+	@Override
+	public String getLogoutData(String uid) {
+		// TODO Auto-generated method stub
+		return userMapper.getLogoutData(uid);
+	}
+
+	@Override
+	public int addLogout(String exid, String uid, String chat, String sign) {
+		// TODO Auto-generated method stub
+		return userMapper.addLogout(exid, uid, chat, sign);
+	}
+
+	@Override
+	public int updData(String chat, String uid, String sign) {
+		// TODO Auto-generated method stub
+		return userMapper.updData(chat, uid, sign);
+	}
+
+	@Override
+	public Map<String, String> getLogout(String uid) {
+		// TODO Auto-generated method stub
+		return userMapper.getLogout(uid);
+	}
+
 
 }

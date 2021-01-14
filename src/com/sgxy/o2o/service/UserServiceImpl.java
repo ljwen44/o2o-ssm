@@ -91,4 +91,28 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userMapper.getTotalByType(type);
 	}
+
+	@Override
+	public int delUserCoin(String uid, Integer coin) {
+		// TODO Auto-generated method stub
+		return userMapper.delUserCoin(uid, coin);
+	}
+
+	@Override
+	public int addUserCoin(String uid, Integer coin) {
+		// TODO Auto-generated method stub
+		return userMapper.addUserCoin(uid, coin);
+	}
+
+	@Override
+	public int updAuthStatus(String uid) {
+		// TODO Auto-generated method stub
+		return userMapper.updAuthStatus(uid);
+	}
+
+	@Override
+	public String getAuthStatus(String uid) {
+		// TODO Auto-generated method stub
+		return userMapper.getAuthStatus(uid);
+	}
 }

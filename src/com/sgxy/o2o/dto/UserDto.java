@@ -15,7 +15,7 @@ public class UserDto {
 	private String rate; // 评分
 	private String auth; // 认证
 	private String authStatus; // 认证状态
-	private int intergral; // 积分
+	private int integral; // 积分
 	private String graduation; // 毕业年限
 	private String avatar; // 头像
 	private String regTime; // 注册时间
@@ -113,11 +113,11 @@ public class UserDto {
 	public void setAuthStatus(String authStatus) {
 		this.authStatus = authStatus;
 	}
-	public int getIntergral() {
-		return intergral;
+	public int getIntegral() {
+		return integral;
 	}
-	public void setIntergral(int intergral) {
-		this.intergral = intergral;
+	public void setIntegral(int integral) {
+		this.integral = integral;
 	}
 	public String getGraduation() {
 		return graduation;

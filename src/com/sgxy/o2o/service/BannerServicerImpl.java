@@ -20,9 +20,9 @@ public class BannerServicerImpl implements BannerService{
 	}
 
 	@Override
-	public int addBanner(String bid, String img, String btime, String title, String desc) {
+	public int addBanner(String bid, String img, String btime, String title, String content) {
 		// TODO Auto-generated method stub
-		return bannerMapper.addBanner(bid, img, btime, title, desc);
+		return bannerMapper.addBanner(bid, img, btime, title, content);
 	}
 
 	@Override
@@ -32,9 +32,9 @@ public class BannerServicerImpl implements BannerService{
 	}
 
 	@Override
-	public int updBanner(String bid, String img, String btime, String title, String desc) {
+	public int updBanner(String bid, String img, String btime, String title, String content) {
 		// TODO Auto-generated method stub
-		return bannerMapper.updBanner(bid, img, btime, title, desc);
+		return bannerMapper.updBanner(bid, img, btime, title, content);
 	}
 
 	@Override

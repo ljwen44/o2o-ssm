@@ -51,6 +51,26 @@ public class UserController extends BasicController{
 	ServletContext context;
 	
 	@ModelAttribute
+	@RequestMapping(value = "/updAuthStatus", method = RequestMethod.POST)
+	public void updAuthStatus(HttpServletRequest request,HttpServletResponse response, String uid) {
+		JSONObject json = new JSONObject();//要返回到页面的对象
+		json.put("message", ""); // 在对象中先添加入一个数据
+		
+		String authStatus = userService.getAuthStatus(uid);
+		if(authStatus.equals("已申请")) {
+			json.put("message", "您已申请认证，请勿重复申请");
+			this.writeJson(json.toString(), response);
+			return;
+		}
+		int flag = userService.updAuthStatus(uid);
+		if(flag < 1) {
+			json.put("message", "申请失败，请稍后重试!");
+		}
+		
+		this.writeJson(json.toString(), response);
+	}
+	
+	@ModelAttribute
 	@RequestMapping(value="/updpwd", method = RequestMethod.POST)
 	public void updpwd(HttpServletRequest request,HttpServletResponse response,String oldpwd,String newpwd, String uid) {
 		JSONObject json = new JSONObject();//要返回到页面的对象
@@ -153,7 +173,6 @@ public class UserController extends BasicController{
 		
 		this.writeJson(json.toString(), response);
 	}
-
 	@ModelAttribute
 	@RequestMapping(value="/getRecUser", method = RequestMethod.POST)
 	public void getRecUser(HttpServletRequest request,HttpServletResponse response) {
@@ -279,6 +298,7 @@ public class UserController extends BasicController{
 		json.put("message", "");
 		
 		Integer pages = (page-1) * 8;
+		userName = "%" + userName + "%";
 		List<UserDto> userList = userService.getUserByConditions(pages, userName, type);
 		json.put("userList", userList);
 		

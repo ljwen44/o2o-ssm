@@ -8,14 +8,13 @@ import com.sgxy.o2o.dto.PartTimeJobDto;
 public interface PartJobService {
 	// 条件查询兼职信息
 	public List<Map<String, String>> getAllJob(String province, String city,
-			String block, String minSalary, String maxSalary, Integer page);
+			String block, String salary, Integer page);
 	
 	// 发布兼职
 	public int addJob(String pid, String uid, String userName, String userPhone,
 			String province, String city, String block,
-			String address, String minSalary, String maxSalary,
-			String startTime, String endTime, String content,
-			String ptime, String pstatus, String precord);
+			String address, String salary,String content,
+			String ptime, String pstatus, String precord, Integer day);
 	
 	// 根据uid获取发布的兼职信息
 	public List<PartTimeJobDto> findInfoByUID(String uid);
@@ -26,4 +25,9 @@ public interface PartJobService {
 	public Map<String, String> getPJob(String pid);
 	
 	public int getTotal();
+	
+	public String getPstatus(String pid);
+	
+	public int delPJob(String pid);
+	public int updStatus(String pid, String pstatus);
 }

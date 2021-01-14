@@ -5,7 +5,7 @@ public class BannerDto {
 	public String img; // 图片
 	public String btime; // 时间
 	public String title; // 标题
-	public String desc; // 描述
+	public String content; // 描述
 	public String getBid() {
 		return bid;
 	}
@@ -30,10 +30,10 @@ public class BannerDto {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getDesc() {
-		return desc;
+	public String getContent() {
+		return content;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDesc(String content) {
+		this.content = content;
 	}
 }

@@ -5,6 +5,7 @@ public class OrderDto {
 	private String pid; // 家教标识id
 	private String oid; // 订单标识id
 	private String flag; // 状态
+	private String time; // 完成日期
 	public String getUid() {
 		return uid;
 	}
@@ -28,6 +29,12 @@ public class OrderDto {
 	}
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(String time) {
+		this.time = time;
 	}
 	
 }

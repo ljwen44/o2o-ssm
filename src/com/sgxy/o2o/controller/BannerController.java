@@ -116,7 +116,12 @@ public class BannerController extends BasicController{
 			String title, String desc, String oimg) {
 		JSONObject json = new JSONObject();
 		json.put("message", "");
-
+		
+		System.err.println(bid);
+		System.err.println(title);
+		System.err.println(desc);
+		System.err.println(img);
+		
 		String imgPath = "";
 		if(img.startsWith("data:image/jpeg;")) {
 			String ImageName = this.getUUID() +".jpg";

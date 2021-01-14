@@ -10,4 +10,13 @@ public interface OrderService {
 	public OrderDto getOrderByPID(String pid);
 	
 	public List<Map<String, String>> getOrder(String uid, String flag);
+	
+	public int addOrder(String uid,String pid, String oid, String flag);
+
+	int delOrder(String oid);
+	// 完成订单
+	int updOFlag(String oid, String flag, String time);
+	
+	// 获取订单状态
+	String getOFlag(String oid);
 }

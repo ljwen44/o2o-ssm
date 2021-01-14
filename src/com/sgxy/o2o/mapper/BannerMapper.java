@@ -15,20 +15,20 @@ public interface BannerMapper {
 	int getAll();
 	
 	// »ñÈ¡ÂÖ²¥Í¼
-	@Select("select * from banner order by btime limit #{page}, 8")
+	@Select("select * from banner order by btime desc limit #{page}, 8")
 	List<BannerDto> getBanners(@Param("page") Integer page);
 
 	// Ìí¼ÓÊ×Ò³ÂÖ²¥Í¼
-	@Insert("insert into banner values(#{bid},#{img},#{btime},#{title},#{desc})")
+	@Insert("insert into banner values(#{bid},#{img},#{btime},#{title},#{content})")
 	int addBanner(@Param("bid") String bid, @Param("img") String img,
-			@Param("btime") String btime, @Param("title") String title, @Param("desc") String desc);
+			@Param("btime") String btime, @Param("title") String title, @Param("content") String content);
 	
 	// É¾³ıÂÖ²¥Í¼
-	@Delete("delete banner where bid=#{bid}")
+	@Delete("delete from banner where bid=#{bid}")
 	int delBanner(@Param("bid") String bid);
 	
 	// ĞŞ¸ÄÂÖ²¥Í¼
-	@Update("update banner set title=#{title},btime=#{btime},desc=#{desc},img=#{img} where bid=#{bid}")
+	@Update("update banner set title=#{title},btime=#{btime},content=#{desc},img=#{img} where bid=#{bid}")
 	int updBanner(@Param("bid") String bid, @Param("img") String img, 
 			@Param("btime") String btime,@Param("title") String title,@Param("desc") String desc);
 }

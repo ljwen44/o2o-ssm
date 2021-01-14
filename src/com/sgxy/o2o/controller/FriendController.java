@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sgxy.o2o.basic.controller.BasicController;
 import com.sgxy.o2o.dto.FriendDto;
+import com.sgxy.o2o.service.ApplyService;
 import com.sgxy.o2o.service.FriendService;
 
 import net.sf.json.JSONObject;
@@ -25,6 +26,9 @@ public class FriendController extends BasicController{
 	@Autowired
 	@Qualifier("friendService")
 	public FriendService friendService;
+	@Autowired
+	@Qualifier("applyService")
+	public ApplyService applyService;
 	
 	@ModelAttribute
 	@RequestMapping(value="/getFriendByUID", method = RequestMethod.POST)
@@ -33,7 +37,7 @@ public class FriendController extends BasicController{
 		JSONObject json = new JSONObject();
 		json.put("message", "");
 		
-		Integer pages = page * 10;
+		Integer pages = (page-1) * 10;
 		List<Map<String, String>> list = friendService.getFriend(uid, pages);
 		json.put("list", list);
 		
@@ -46,7 +50,7 @@ public class FriendController extends BasicController{
 	@ModelAttribute
 	@RequestMapping(value="/delFriendByFID", method = RequestMethod.POST)
 	public void delFriendByFID(HttpServletRequest request,HttpServletResponse response, 
-			String fid) {
+			String fid, String uid, String ruid) {
 		JSONObject json = new JSONObject();
 		json.put("message", "");
 		
@@ -60,8 +64,13 @@ public class FriendController extends BasicController{
 		int delStatus = friendService.delFriend(fid);
 		if(delStatus < 1) {
 			json.put("message", "É¾³ýÊ§°Ü£¬ÇëÉÔºóÖØÊÔ!");
+			this.writeJson(json.toString(), response);
+			return ;
 		}
-		
+		int delApplyStatus = applyService.delByDelFriend(uid, ruid);
+		if(delApplyStatus < 1) {
+			json.put("message", "É¾³ýÊ§°Ü£¬ÇëÉÔºóÖØÊÔ!");
+		}
 		this.writeJson(json.toString(), response);
 	}
 }

@@ -5,7 +5,9 @@ import java.util.Map;
 
 public interface AdminService {
 	public List<Map<String, String>> getAnaUserType();
-	public List<Map<String, String>> getUserRegTime();
-	public List<Map<String, String>> getUserSignAll();
-	public List<Map<String, String>> getUserSignInDate();
+	public List<Map<String, String>> getUserNumByDate(String date);
+	public List<Map<String, String>> getUserSignByDate(String date);
+	public List<Map<String, String>> getSignByDateAndType(String date, String type);
+	public List<Map<String, String>> getOrderByDateAndNum(String date, Integer num);
+	public List<Map<String, String>> getCoinByDateAndNum(String date, Integer num);
 }

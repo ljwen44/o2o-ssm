@@ -24,4 +24,10 @@ public class ProgressServiceImpl implements ProgressService {
 		// TODO Auto-generated method stub
 		return progressMapper.addProgress(oid, ppid, content, pptime);
 	}
+
+	@Override
+	public void delProgress(String oid) {
+		// TODO Auto-generated method stub
+		progressMapper.delProgress(oid);
+	}
 }

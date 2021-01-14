@@ -20,20 +20,32 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Map<String, String>> getUserSignAll() {
+	public List<Map<String, String>> getUserNumByDate(String date) {
 		// TODO Auto-generated method stub
-		return adminMapper.getUserSignAll();
+		return adminMapper.getUserNumByDate(date);
 	}
 
 	@Override
-	public List<Map<String, String>> getUserSignInDate() {
+	public List<Map<String, String>> getUserSignByDate(String date) {
 		// TODO Auto-generated method stub
-		return adminMapper.getUserSignInDate();
+		return adminMapper.getUserSignByDate(date);
 	}
 
 	@Override
-	public List<Map<String, String>> getUserRegTime() {
+	public List<Map<String, String>> getSignByDateAndType(String date, String type) {
 		// TODO Auto-generated method stub
-		return adminMapper.getUserRegTime();
+		return adminMapper.getSignByDateAndType(date, type);
+	}
+
+	@Override
+	public List<Map<String, String>> getOrderByDateAndNum(String date, Integer num) {
+		// TODO Auto-generated method stub
+		return adminMapper.getOrderByDateAndNum(date, num);
+	}
+
+	@Override
+	public List<Map<String, String>> getCoinByDateAndNum(String date, Integer num) {
+		// TODO Auto-generated method stub
+		return adminMapper.getCoinByDateAndNum(date, num);
 	}
 }

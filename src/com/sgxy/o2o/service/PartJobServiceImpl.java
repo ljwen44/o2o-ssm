@@ -15,14 +15,6 @@ public class PartJobServiceImpl implements PartJobService {
 	public PartJobMapper partJobMapper;
 
 	@Override
-	public int addJob(String pid, String uid, String userName, String userPhone, String province, String city,
-			String block, String address, String minSalary, String maxSalary, String startTime, String endTime,
-			String content, String ptime, String pstatus, String precord) {
-		// TODO Auto-generated method stub
-		return partJobMapper.addJob(pid, uid, userName, userPhone, province, city, block, address, minSalary, maxSalary, startTime, endTime, content, ptime, pstatus, precord);
-	}
-
-	@Override
 	public List<PartTimeJobDto> findInfoByUID(String uid) {
 		// TODO Auto-generated method stub
 		return partJobMapper.findInfoByUID(uid);
@@ -41,16 +33,42 @@ public class PartJobServiceImpl implements PartJobService {
 	}
 
 	@Override
-	public List<Map<String, String>> getAllJob(String province, String city, String block, String minSalary,
-			String maxSalary, Integer page) {
+	public List<Map<String, String>> getAllJob(String province, String city, String block, String salary,
+		 Integer page) {
 		// TODO Auto-generated method stub
-		return partJobMapper.getAllJob(province, city, block, minSalary, maxSalary, page);
+		return partJobMapper.getAllJob(province, city, block, salary, page);
 	}
 
 	@Override
 	public int getTotal() {
 		// TODO Auto-generated method stub
 		return partJobMapper.getTotal();
+	}
+
+	@Override
+	public String getPstatus(String pid) {
+		// TODO Auto-generated method stub
+		return partJobMapper.getPstatus(pid);
+	}
+
+	@Override
+	public int addJob(String pid, String uid, String userName, String userPhone, String province, String city,
+			String block, String address, String salary, String content, String ptime, String pstatus, String precord,
+			Integer day) {
+		// TODO Auto-generated method stub
+		return partJobMapper.addJob(pid, uid, userName, userPhone, province, city, block, address, salary, content, ptime, pstatus, precord, day);
+	}
+
+	@Override
+	public int delPJob(String pid) {
+		// TODO Auto-generated method stub
+		return partJobMapper.delPJob(pid);
+	}
+
+	@Override
+	public int updStatus(String pid, String pstatus) {
+		// TODO Auto-generated method stub
+		return partJobMapper.updStatus(pid, pstatus);
 	}
 
 	

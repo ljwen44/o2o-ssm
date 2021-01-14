@@ -36,7 +36,7 @@ public class SignController extends BasicController{
 		JSONObject json = new JSONObject();
 		json.put("message", "");
 		String sid = this.getUUID();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		String stime = df.format(new Date());
 		int status = signService.addSign(sid, uid, stime);
 		if(status < 1) {
@@ -45,7 +45,9 @@ public class SignController extends BasicController{
 			return ;
 		}
 		int flag = userService.addJFen(uid);
-		System.out.println(flag);
+		if(flag < 1) {
+			json.put("message", "Ç©µ½Ê§°Ü£¬ÇëË¢ÐÂÖØÊÔ!");
+		}
 		this.writeJson(json.toString(), response);
 	}
 

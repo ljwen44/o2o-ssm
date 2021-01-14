@@ -1,6 +1,7 @@
 package com.sgxy.o2o.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -25,10 +26,10 @@ public interface UserMapper {
 	String getUserByPhone(@Param("phone") String phone);
 	// 添加用户
 	@Insert("insert into user(uid, email, phone, password, type, userName, regTime, auth) "
-			+ "values(#{uid},#{email},#{phone},#{password},#{type},#{userName},#{regTime},#{auth})")
+			+ "values(#{uid},#{email},#{phone},#{password},#{type},#{userName},#{regTime},#{coin},#{auth})")
 	int addUser(@Param("uid") String uid, @Param("email") String email, @Param("password") String password,
 			@Param("type") String type, @Param("phone") String phone, @Param("userName") String userName,
-			@Param("regTime") String regTime, @Param("auth") String auth);
+			@Param("regTime") String regTime, @Param("auth") Integer coin, @Param("auth") String auth);
 	// 修改密码
 	@Update("update user set password=#{password} where uid=#{uid}")
 	int updPwd(@Param("uid") String uid,@Param("password") String password);	
@@ -60,7 +61,7 @@ public interface UserMapper {
 			@Param("phone") String phone, @Param("avatar") String avatar);
 	// 获取需要认证的用户
 	@Select("<script>"
-			+ "select * from user where auth='未认证' and type='教员' and authStatus='认证中' "
+			+ "select * from user where auth='未认证' and type='教员' and authStatus='已申请' "
 			+ "<if test='userName!=null and userName != \"\" '>"
 			+ "and userName like #{userName} "
 			+ "</if>"
@@ -100,6 +101,28 @@ public interface UserMapper {
 			+ "</script>")
 	int getTotalByType(@Param("type") String type);
 
+	@Insert("insert into exitdata values(#{exid},#{uid},#{chat},#{sign})")
+	int addLogout(@Param("exid") String exid,@Param("uid") String uid,
+			@Param("chat") String chat, @Param("sign") String sign);
 	
+	@Select("select exid from exitdata where uid=#{uid}")
+	String getLogoutData(@Param("uid") String uid);
+	
+	@Update("update exitdata set chat=#{chat},sign=#{sign} where uid=#{uid}")
+	int updData(@Param("chat") String chat, @Param("uid") String uid, @Param("sign") String sign);
 
+	@Select("select * from exitdata where uid=#{uid}")
+	Map<String, String> getLogout(@Param("uid") String uid);
+	
+	@Update("update user set coin=coin-#{coin} where uid=#{uid}")
+	int delUserCoin(@Param("uid") String uid, @Param("coin") Integer coin);
+	
+	@Update("update user set coin=coin+#{coin} where uid=#{uid}")
+	int addUserCoin(@Param("uid") String uid, @Param("coin") Integer coin);
+	
+	// 用户申请认证
+	@Update("update user set authStatus='已申请' where uid=#{uid}")
+	int updAuthStatus(@Param("uid") String uid);
+	@Select("select authStatus from user where uid=#{uid}")
+	String getAuthStatus(@Param("uid") String uid);
 }

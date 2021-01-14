@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sgxy.o2o.basic.controller.BasicController;
+import com.sgxy.o2o.dto.ApplyDto;
 import com.sgxy.o2o.service.ApplyService;
 import com.sgxy.o2o.service.FriendService;
 import com.sgxy.o2o.service.SysNoticeService;
@@ -36,6 +37,28 @@ public class ApplyController extends BasicController{
 	@Autowired
 	@Qualifier("sysNoticeService")
 	public SysNoticeService sysNoticeService;
+	
+	@ModelAttribute
+	@RequestMapping(value="/addApplyByUID", method = RequestMethod.POST)
+	public void addApplyByUID(HttpServletRequest request,HttpServletResponse response,
+			String uid, String ruid, String desc) {
+		JSONObject json = new JSONObject();
+		json.put("message", "");
+		
+		ApplyDto status = applyService.getApplyFlag(uid, ruid);
+		if(status != null) {
+			json.put("message", "已申请好友添加,请勿重复申请");
+		} else {
+			String aid = this.getUUID();
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String atime = df.format(new Date());
+			int add = applyService.addApply(aid, uid, ruid, 0, desc, atime);
+			if(add < 1) {
+				json.put("message", "添加失败，请稍后重试!");
+			}
+		}
+		this.writeJson(json.toString(), response);
+	}
 	
 	@ModelAttribute
 	@RequestMapping(value="/getApplyByUID", method = RequestMethod.POST)
@@ -61,7 +84,7 @@ public class ApplyController extends BasicController{
 		JSONObject json = new JSONObject();
 		json.put("message", "");
 		
-		int updStatus = applyService.updApply(aid);
+		int updStatus = applyService.updApply(aid, 1);
 		if(updStatus < 1) {
 			json.put("message", "数据处理异常，请刷新重试");
 			this.writeJson(json.toString(), response);

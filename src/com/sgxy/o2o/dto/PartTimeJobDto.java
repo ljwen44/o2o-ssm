@@ -9,16 +9,20 @@ public class PartTimeJobDto {
 	private String block; // 市
 	private String city; // 区
 	private String address; // 详细地址
-	private String minSalary; // 最低薪资
-	private String maxSalary; // 最高薪资
-	private String startTime; // 开始时间
-	private String endTime; // 结束时间
+	private String salary; // 薪资
 	private String content; // 职位描述
 	private String ptime; // 发布时间
 	private String pstatus; // 家教状态
 	private String precord; // 学历要求
+	private int day; // 为期几天
 	public String getpUUID() {
 		return pid;
+	}
+	public int getDay() {
+		return day;
+	}
+	public void setDay(int day) {
+		this.day = day;
 	}
 	public void setpUUID(String pUUID) {
 		this.pid = pUUID;
@@ -66,28 +70,10 @@ public class PartTimeJobDto {
 		this.address = address;
 	}
 	public String getMinSalary() {
-		return minSalary;
+		return salary;
 	}
-	public void setMinSalary(String minSalary) {
-		this.minSalary = minSalary;
-	}
-	public String getMaxSalary() {
-		return maxSalary;
-	}
-	public void setMaxSalary(String maxSalary) {
-		this.maxSalary = maxSalary;
-	}
-	public String getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-	public String getEndTime() {
-		return endTime;
-	}
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
+	public void setMinSalary(String salary) {
+		this.salary = salary;
 	}
 	public String getContent() {
 		return content;
