@@ -2,6 +2,7 @@ package com.sgxy.o2o.service;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.sgxy.o2o.dto.UserDto;
 
@@ -19,7 +20,7 @@ public interface UserService {
 			String introduce,String uid);
 	
 	// 获取推荐用户
-	public List<UserDto> getRecUser();
+	public List<Map<String, String>> getRecUser();
 	
 	// 增加积分
 	public int addJFen(String uid);
@@ -41,6 +42,13 @@ public interface UserService {
 	public int delUserCoin(String uid, Integer coin);
 	public int addUserCoin(String uid, Integer coin);
 	// 申请认证
-	int updAuthStatus(String uid);
-	String getAuthStatus(String uid);
+	public int updAuthStatus(String uid);
+	public String getAuthStatus(String uid);
+	
+	// 根据电话号码修改密码
+	public int updByPhone(String phone, String password);
+	
+	public String getUidByPhone(String phone);
+	
+	public int ReCoin(String uid);
 }

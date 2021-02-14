@@ -69,5 +69,48 @@ public interface AdminMapper {
 			+ "on t.time=c.time order by t.time desc")
 	List<Map<String, String>> getCoinByDateAndNum(@Param("date") String date, @Param("num") Integer num);
 	
+	// 根据日期查看学币收入与支出
+	@Select("select t.time, ifnull(a.value, 0) as value "
+			+ "from (select date_format(date_add(#{date},interval -t.help_topic_id day),'%Y-%m-%d') as time "
+			+ "from mysql.help_topic t where t.help_topic_id<#{num}) as t "
+			+ "left join (select date_format(a.time,'%Y-%m-%d') as time, sum(a.paynum) as value "
+			+ "from alipay a where a.type=1 group by date_format(a.time,'%Y-%m-%d')) as a "
+			+ "on t.time=a.time order by t.time desc")
+	List<Map<String, String>> getCoinIn(@Param("date") String date, @Param("num") Integer num);
+	@Select("select t.time, ifnull(a.value, 0) as value "
+			+ "from (select date_format(date_add(#{date},interval -t.help_topic_id day),'%Y-%m-%d') as time "
+			+ "from mysql.help_topic t where t.help_topic_id<#{num}) as t "
+			+ "left join (select date_format(a.time,'%Y-%m-%d') as time, sum(a.paynum) as value "
+			+ "from alipay a where a.type=0 group by date_format(a.time,'%Y-%m-%d')) as a "
+			+ "on t.time=a.time order by t.time desc")
+	List<Map<String, String>> getCoinOut(@Param("date") String date, @Param("num") Integer num);
+	
 	// -----------------管理员数据统计结束
+	
+	// ----------管理员操作兼职信息开始-----------------
+	
+	// 获取条件兼职信息
+	@Select("<script>"
+			+ "select p.*, u.uid userUUID, u.userName name, u.avatar "
+			+ "from parttimejob p, user u where type=#{type} "
+			+ "<if test='pstatus!=null and pstatus != \"\" '>"
+			+ "and pstatus=#{pstatus} "
+			+ "</if>"
+			+ "order by p.ptime desc "
+			+ "limit #{page},10"
+			+ "</script>")
+	List<Map<String, String>> getPJobByAdmin(@Param("type") String type,
+			@Param("pstatus") String pstatus, @Param("page") Integer page);
+	// 根据条件获取兼职信息总数
+	@Select("<script>"
+			+ "select count(*) "
+			+ "from parttimejob p, user u where type=#{type} "
+			+ "<if test='pstatus!=null and pstatus != \"\" '>"
+			+ "and pstatus=#{pstatus} "
+			+ "</if>"
+			+ "</script>")
+	int getTotalByAdmin(@Param("type") String type, @Param("pstatus") String pstatus);
+	
+	
+	// ----------管理员操作兼职信息结束-----------------
 }

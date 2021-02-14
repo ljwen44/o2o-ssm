@@ -10,7 +10,7 @@ import com.sgxy.o2o.dto.SysNoticeDto;
 
 public interface SysNoticeMapper {
 	// 根据uid查询
-	@Select("select * from sysnotice where uid=#{uid}")
+	@Select("select * from sysnotice where uid=#{uid} order by time desc")
 	List<SysNoticeDto> getSysNotice(@Param("uid") String uid);
 	
 	// 添加数据

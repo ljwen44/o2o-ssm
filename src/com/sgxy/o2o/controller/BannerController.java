@@ -117,11 +117,6 @@ public class BannerController extends BasicController{
 		JSONObject json = new JSONObject();
 		json.put("message", "");
 		
-		System.err.println(bid);
-		System.err.println(title);
-		System.err.println(desc);
-		System.err.println(img);
-		
 		String imgPath = "";
 		if(img.startsWith("data:image/jpeg;")) {
 			String ImageName = this.getUUID() +".jpg";
@@ -157,4 +152,15 @@ public class BannerController extends BasicController{
 		this.writeJson(json.toString(), response);
 	}
 
+	@ModelAttribute
+	@RequestMapping(value="/getIndexBanners", method = RequestMethod.POST)
+	public void getIndexBanners(HttpServletRequest request, HttpServletResponse response) {
+		JSONObject json = new JSONObject();
+		json.put("message", "");
+		
+		List<String> bannerList = bannerService.getIndexBanner();
+		json.put("list", bannerList);
+		
+		this.writeJson(json.toString(), response);
+	}
 }

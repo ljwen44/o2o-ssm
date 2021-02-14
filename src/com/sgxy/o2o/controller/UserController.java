@@ -90,6 +90,32 @@ public class UserController extends BasicController{
 		this.writeJson(json.toString(), response);
 	}
 
+	// 根据电话号码修改密码
+	@ModelAttribute
+	@RequestMapping("/updByPhone")
+	public void edit(HttpServletRequest request,HttpServletResponse response,
+			String phone, String password) {
+		JSONObject json = new JSONObject();//要返回到页面的对象
+		json.put("message", ""); // 在对象中先添加入一个数据
+		
+		String isExist = userService.getUidByPhone(phone);
+		if(isExist == null || isExist == "") {
+			json.put("message", "该手机号码未被注册");
+			this.writeJson(json.toString(), response);
+			return ;
+		}
+		
+		String pwd = this.md5(password);
+		int flag = userService.updByPhone(phone, pwd);
+		if(flag < 1) {
+			json.put("message", "修改失败，请稍后重试!");
+		}
+		
+		this.writeJson(json.toString(), response);
+	}
+	
+	
+	
 	@ModelAttribute
 	@RequestMapping(value="/edit", method = RequestMethod.POST)
 	public void edit(HttpServletRequest request,HttpServletResponse response,String avatar, String userName,
@@ -173,15 +199,13 @@ public class UserController extends BasicController{
 		
 		this.writeJson(json.toString(), response);
 	}
+	
 	@ModelAttribute
 	@RequestMapping(value="/getRecUser", method = RequestMethod.POST)
 	public void getRecUser(HttpServletRequest request,HttpServletResponse response) {
 		JSONObject json = new JSONObject();
 		json.put("message", "");
-		List<UserDto> list = userService.getRecUser();
-		for (int i = 0; i < list.size(); i++) {
-			list.get(i).setPassword("");
-		}
+		List<Map<String, String>> list = userService.getRecUser();
 		json.put("list", list);
 		this.writeJson(json.toString(), response);
 	}
@@ -328,4 +352,18 @@ public class UserController extends BasicController{
 		
 		this.writeJson(json.toString(), response);
 	}
+	
+	@ModelAttribute
+	@RequestMapping(value="/reCoin", method = RequestMethod.POST)
+	public void reCoin(HttpServletRequest request,HttpServletResponse response, 
+			String uid) {
+		JSONObject json = new JSONObject();
+		json.put("message", "");
+		
+		int coin = userService.ReCoin(uid);
+		json.put("coin", coin);
+		
+		this.writeJson(json.toString(), response);
+	}
+	
 }

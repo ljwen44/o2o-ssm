@@ -33,4 +33,10 @@ public class CoinSaveServiceImpl implements CoinSaveService {
 		// TODO Auto-generated method stub
 		return coinSaveMapper.updCoinTime(pid, time);
 	}
+
+	@Override
+	public int delCoinByUIDandPID(String uid, String pid) {
+		// TODO Auto-generated method stub
+		return coinSaveMapper.delCoinByUIDandPID(uid, pid);
+	}
 }

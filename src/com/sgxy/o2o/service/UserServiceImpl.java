@@ -1,6 +1,7 @@
 package com.sgxy.o2o.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserDto> getRecUser() {
+	public List<Map<String, String>> getRecUser() {
 		// TODO Auto-generated method stub
 		return userMapper.getRecUser();
 	}
@@ -114,5 +115,23 @@ public class UserServiceImpl implements UserService {
 	public String getAuthStatus(String uid) {
 		// TODO Auto-generated method stub
 		return userMapper.getAuthStatus(uid);
+	}
+
+	@Override
+	public int updByPhone(String phone, String password) {
+		// TODO Auto-generated method stub
+		return userMapper.updByPhone(phone, password);
+	}
+
+	@Override
+	public String getUidByPhone(String phone) {
+		// TODO Auto-generated method stub
+		return userMapper.getUidByPhone(phone);
+	}
+
+	@Override
+	public int ReCoin(String uid) {
+		// TODO Auto-generated method stub
+		return userMapper.ReCoin(uid);
 	}
 }

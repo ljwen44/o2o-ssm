@@ -25,11 +25,11 @@ public interface UserMapper {
 	@Select("select * from user where phone=#{phone}")
 	String getUserByPhone(@Param("phone") String phone);
 	// 添加用户
-	@Insert("insert into user(uid, email, phone, password, type, userName, regTime, auth) "
+	@Insert("insert into user(uid, email, phone, password, type, userName, regTime, coin, auth) "
 			+ "values(#{uid},#{email},#{phone},#{password},#{type},#{userName},#{regTime},#{coin},#{auth})")
 	int addUser(@Param("uid") String uid, @Param("email") String email, @Param("password") String password,
 			@Param("type") String type, @Param("phone") String phone, @Param("userName") String userName,
-			@Param("regTime") String regTime, @Param("auth") Integer coin, @Param("auth") String auth);
+			@Param("regTime") String regTime, @Param("coin") Integer coin, @Param("auth") String auth);
 	// 修改密码
 	@Update("update user set password=#{password} where uid=#{uid}")
 	int updPwd(@Param("uid") String uid,@Param("password") String password);	
@@ -45,10 +45,10 @@ public interface UserMapper {
 			@Param("city") String city,@Param("IDpass") String IDpass,@Param("phone") String phone,
 			@Param("introduce") String introduce,@Param("uid") String uid);
 	// 获取推荐用户
-	@Select("select * from user where type='教员' "
-			+ "order by rate "
-			+ "limit 5")
-	List<UserDto> getRecUser();
+	@Select("select AVG(e.erate) rate, e.ruid, u.userName, u.avatar, u.auth "
+			+ "from evaluate e, user u where e.ruid=u.uid and u.type='教员' "
+			+ "GROUP BY e.ruid ORDER BY rate desc")
+	List<Map<String, String>> getRecUser();
 	// 签到加积分
 	@Update("update user set integral=integral+5,calcIntegral=calcIntegral+5 where uid=#{uid}")
 	int addJFen(@Param("uid") String uid);
@@ -125,4 +125,17 @@ public interface UserMapper {
 	int updAuthStatus(@Param("uid") String uid);
 	@Select("select authStatus from user where uid=#{uid}")
 	String getAuthStatus(@Param("uid") String uid);
+
+	// 根据电话号码修改密码
+	@Update("update user set password=#{password} where phone=#{phone}")
+	int updByPhone(@Param("phone") String phone, @Param("password") String password);
+
+	// 根据电话号码返回用户
+	@Select("select uid from user where phone=#{phone}")
+	String getUidByPhone(@Param("phone") String phone);
+	
+	// 刷新学币
+	@Select("select coin from user where uid=#{uid}")
+	int ReCoin(@Param("uid") String uid);
+	
 }

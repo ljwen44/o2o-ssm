@@ -6,4 +6,6 @@ public interface CoinSaveService {
 	int getCoinSave(String pid);
 
 	int updCoinTime(String pid, String time);
+	int delCoinByUIDandPID(String uid, String pid);
+
 }

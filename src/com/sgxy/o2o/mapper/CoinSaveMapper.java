@@ -1,5 +1,6 @@
 package com.sgxy.o2o.mapper;
 
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -20,4 +21,7 @@ public interface CoinSaveMapper {
 	
 	@Update("update coinsave set time=#{time},flag=1 where pid=#{pid}")
 	int updCoinTime(@Param("pid") String pid, @Param("time") String time);
+	
+	@Delete("delete from coinsave where uid=#{uid} and pid=#{pid}")
+	int delCoinByUIDandPID(@Param("uid") String uid, @Param("pid") String pid);
 }

@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sgxy.o2o.basic.controller.BasicController;
 import com.sgxy.o2o.service.AdminService;
+import com.sgxy.o2o.service.AlipayService;
 
 import net.sf.json.JSONObject;
 
@@ -26,7 +29,12 @@ public class AdminController extends BasicController{
 	@Autowired
 	@Qualifier("adminService")
 	public AdminService adminService;
+	@Autowired
+	@Qualifier("alipayService")
+	public AlipayService alipayService;
 	
+	
+	// ----------------管理员统计数据展示开始------------------------
 	@ModelAttribute
 	@RequestMapping(value="/getAnaUserType", method = RequestMethod.POST)
 	public void getAnaUserType(HttpServletRequest request, HttpServletResponse response) {
@@ -93,5 +101,63 @@ public class AdminController extends BasicController{
 		this.writeJson(json.toString(), response);
 	}
 	
+	// ----------------管理员统计数据展示结束------------------------
 	
+	// ----------------管理员查看学币支出收入开始---------------------
+	@ModelAttribute
+	@RequestMapping(value = "/getCoinOutAndIn", method = RequestMethod.POST)
+	public void getCoinOutAndIn(HttpServletRequest request, HttpServletResponse response,
+			String date, Integer num) {
+		JSONObject json = new JSONObject();
+		json.put("message", "");
+		
+		// 收入
+		List<Map<String, String>> coinIn = adminService.getCoinIn(date, num);
+		json.put("In", coinIn);
+//		List<Map<String, String>> coinOut = adminService.getCoinOut(date, num);
+//		json.put("Out", coinOut);
+		this.writeJson(json.toString(), response);
+	}
+	
+	// ----------------管理员查看学币支出收入结束---------------------
+	
+	
+	
+	// ----------------管理员兼职信息操作开始------------------------
+	// 根据类型筛选兼职信息
+	@ModelAttribute
+	@RequestMapping(value = "/getPJobByAdmin", method = RequestMethod.POST)
+	public void getPJobByAdmin(HttpServletRequest request, HttpServletResponse response,
+			String type, String pstatus, Integer page) {
+		JSONObject json = new JSONObject();
+		json.put("message", "");
+		
+		Integer pages = (page-1)*10;
+		List<Map<String, String>> list = adminService.getPJobByAdmin(type, pstatus, pages);
+		json.put("list", list);
+		
+		int total = adminService.getTotalByAdmin(type, pstatus);
+		json.put("total", total);
+		
+		this.writeJson(json.toString(), response);
+	}
+	
+	// 根据pid删除信息
+	@ModelAttribute
+	@RequestMapping(value = "/delPJobByPid", method = RequestMethod.POST)
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void delPJobByPid(HttpServletRequest request, HttpServletResponse response,
+			String pid, String uid) {
+		JSONObject json = new JSONObject();
+		json.put("message", "");
+		
+		String msg = adminService.delPartJob(pid, uid);
+		if(!msg.equals("OK")) {
+			json.put("message", msg);
+		}
+		
+		this.writeJson(json.toString(), response);
+	}
+	
+	// ----------------管理员兼职信息操作结束------------------------
 }

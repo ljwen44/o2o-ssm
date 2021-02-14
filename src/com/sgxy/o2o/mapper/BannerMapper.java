@@ -31,4 +31,8 @@ public interface BannerMapper {
 	@Update("update banner set title=#{title},btime=#{btime},content=#{desc},img=#{img} where bid=#{bid}")
 	int updBanner(@Param("bid") String bid, @Param("img") String img, 
 			@Param("btime") String btime,@Param("title") String title,@Param("desc") String desc);
+
+	// »ñÈ¡Ê×Ò³ÂÖ²¥Í¼
+	@Select("select img from banner order by btime desc limit 4")
+	List<String> getIndexBanner();
 }

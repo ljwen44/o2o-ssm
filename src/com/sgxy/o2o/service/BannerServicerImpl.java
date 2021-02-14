@@ -43,4 +43,10 @@ public class BannerServicerImpl implements BannerService{
 		return bannerMapper.getAll();
 	}
 
+	@Override
+	public List<String> getIndexBanner() {
+		// TODO Auto-generated method stub
+		return bannerMapper.getIndexBanner();
+	}
+
 }

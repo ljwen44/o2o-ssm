@@ -69,7 +69,7 @@ public class LoginController extends BasicController{
 		}
 		String uid = this.getUUID();
 		String md5Password = this.md5(password); // 将原始密码进行MD5加密，数据库保存的是加密后的数据
-		String userName = "用户"+Math.floor(Math.random()*100000);
+		String userName = "用户"+ (int) Math.floor(Math.random()*100000);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String regTime = df.format(new Date());
 		int status = loginService.addUser(uid, email, md5Password, type, phone, userName, regTime, 0, "未认证");

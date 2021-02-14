@@ -10,4 +10,6 @@ public interface BannerService {
 	public int addBanner(String bid,String img, String btime, String title, String content);
 	public int delBanner(String bid);
 	public int updBanner(String bid,String img,String btime, String title, String content);
+
+	public List<String> getIndexBanner();
 }
